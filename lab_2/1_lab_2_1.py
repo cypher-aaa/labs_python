@@ -86,11 +86,7 @@ def from_file():
             with open(input(), "r") as f:
                 arr_2 = check_arr(f.readline())
                 limits_2 = check_limits(f.readline(), arr_2)
-                if (not arr_2):
-                    pass
-                elif (not limits_2):
-                    pass
-                else:
+                if (arr_2 and limits_2):
                     print("Сумма на отрезке", limits_2, ":",
                           sqrt_decomp(arr_2, limits_2[0], limits_2[1]))
                 f.close()

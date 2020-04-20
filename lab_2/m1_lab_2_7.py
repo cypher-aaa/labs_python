@@ -34,11 +34,8 @@ def main():
     args = parser.parse_args()
     if args.n:
         try:
-            n = float(args.n)
-            if(n < 0 or n % 1 != 0):
-                print("N должно быть натуральным числом или 0!")
-            else:
-                print(leonardo(int(n)))
+            if leonardo(float(args.n)):
+                print("Ваше число:", leonardo(float(args.n)))
         except ValueError:
             print("Некорректный ввод.")
     else:

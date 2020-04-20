@@ -10,20 +10,24 @@ def count_bits(number):
     return count
 
 
-def main():
-    """Если число меньше 1 или не натуральное, то программа выводит 'Нет'.
-    Если количество 1, подсчитанных через count_bits(), равно 1, то выводит
-    'Да'. В иных случаях, программа выводит 'Нет'.
+def is_power(num):
+    """Если число меньше 1, не натуральное или количество единиц в его
+    двоичном представлении не равно 1, то функция возвращает
+    False. В иных случаях - True.
     """
+    if (num < 1 or num % 1 != 0 or count_bits(int(num)) != 1):
+        return False
+    else:
+        return True
+
+
+def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--n", help="enter n")
     args = parser.parse_args()
     if args.n:
         try:
-            num = float(args.n)
-            if(num < 1 or num % 1 != 0):
-                print("Нет.")
-            elif (count_bits(int(num)) == 1):
+            if (is_power(float(args.n))):
                 print("Да.")
             else:
                 print("Нет.")
@@ -34,9 +38,7 @@ def main():
         while (True):
             try:
                 num = float(input())
-                if (num < 1 or num % 1 != 0):
-                    print("Нет.")
-                elif (count_bits(int(num)) == 1):
+                if (is_power(num)):
                     print("Да.")
                 else:
                     print("Нет.")

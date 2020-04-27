@@ -89,7 +89,6 @@ def from_file():
                 if (arr_2 and limits_2):
                     print("Сумма на отрезке", limits_2, ":",
                           sqrt_decomp(arr_2, limits_2[0], limits_2[1]))
-                f.close()
             break
         except FileNotFoundError:
             print("Введите корректный путь к файлу!")

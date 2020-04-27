@@ -53,8 +53,8 @@ def generate_file(name, size_mb, k, l):
 def status_bar(current, final):
     curr = int(current/(final/20))
     status = '[' + '#'*curr + '-'*(20-curr) + ']'
-    stdout.write("\r" + str(status) + " " + str(current) + "/" + str(final) +
-                 " bytes")
+    stdout.write("\r" + status + " " + "{:,}".format(current) + " out of " + 
+                 "{:,}".format(final) + " bytes")
     stdout.flush()
 
 
@@ -151,6 +151,7 @@ def main():
             if(l):
                 break
         generate_file(name, size, k, l)
+
 
 if __name__ == "__main__":
     main()

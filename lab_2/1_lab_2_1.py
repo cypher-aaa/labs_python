@@ -1,10 +1,10 @@
-import math as mth
+from math import ceil, sqrt
 
 
 def sqrt_decomp(array, l, r):
     "preprocessing"
     arr_len = len(array)
-    b_len = mth.ceil(mth.sqrt(arr_len))
+    b_len = ceil(sqrt(arr_len))
     blocks = [0] * b_len
     for i in range(arr_len):
         blocks[i // b_len] += array[i]
@@ -75,10 +75,9 @@ def manual():
 
 def from_file():
     """Считывание данных из файла. Массив находиться в одной строчке,
-    границы - в другой. Например,
+    границы - в другой. Например:
     1 2 3 4 5 6 7 8 9
     2 5
-    .
     """
     print("Введите путь к файлу:", end="")
     while (True):

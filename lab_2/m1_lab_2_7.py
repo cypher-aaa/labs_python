@@ -3,8 +3,7 @@ import argparse
 
 def fib(n):
     "Функция находит и возвращает n-ное число Фибоначчи."
-    a = 0
-    b = 1
+    a, b = 0, 1
     if n == 0:
         return a
     elif n == 1:

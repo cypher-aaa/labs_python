@@ -7,29 +7,20 @@ def to_json(obj, file=''):
             string = "{"
             for elem in obj:
                 string += to_json(elem) + ": " + to_json(obj[elem])
-                if elem != list(obj)[-1]:
-                    string += ", "
-                else:
-                    string += "}"
+                string += ', ' if elem != list(obj)[-1] else '}'
             return string
         elif isinstance(obj, (list, tuple)):
             string = "["
             for elem in obj:
                 string += to_json(elem)
-                if obj.index(elem) != len(obj)-1:
-                    string += ", "
-                else:
-                    string += "]"
+                string += ', ' if obj.index(elem) != len(obj)-1 else ']'
             return string
         elif isinstance(obj, str):
             return '"' + obj + '"'
         elif isinstance(obj, type(None)):
             return 'null'
         elif isinstance(obj, bool):
-            if obj is True:
-                return 'true'
-            else:
-                return 'false'
+            return 'true' if obj else 'false'
         elif isinstance(obj, (int, float)):
             return num_to_str(obj)
         else:
@@ -60,10 +51,8 @@ def split_num(num):
                 temp *= 10
                 digit = temp % 10 // 1
                 array += [digit]
-    if sign:
-        array = [sign] + array
 
-    return array
+    return [sign] + array if sign else array
 
 
 def num_to_str(num):

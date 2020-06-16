@@ -3,9 +3,9 @@ import argparse
 
 def flatten_it(array):
     for elem in array:
-        if(type(elem) != list):
+        if type(elem) != list:
             yield elem
-        elif(elem == array):
+        elif elem == array:
             raise ValueError
         else:
             for x in flatten_it(elem):
@@ -29,7 +29,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--arr", help="enter array to linearize")
     args = parser.parse_args()
-    if(args.arr):
+    if args.arr:
         output(args.arr)
     else:
         output(input("Введите массив:"))

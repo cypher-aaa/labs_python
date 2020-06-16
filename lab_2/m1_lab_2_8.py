@@ -4,7 +4,7 @@ import argparse
 def count_bits(number):
     """Функция считает количество 1-иц в двоичном представлении number."""
     count = 0
-    while (number):
+    while number:
         number &= (number-1)
         count += 1
     return count
@@ -27,7 +27,7 @@ def main():
     args = parser.parse_args()
     if args.n:
         try:
-            if (is_power(float(args.n))):
+            if is_power(float(args.n)):
                 print("Да.")
             else:
                 print("Нет.")
@@ -38,7 +38,7 @@ def main():
         while (True):
             try:
                 num = float(input())
-                if (is_power(num)):
+                if is_power(num):
                     print("Да.")
                 else:
                     print("Нет.")

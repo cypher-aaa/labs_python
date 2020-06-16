@@ -2,25 +2,27 @@ import argparse
 from sys import stdout
 
 
-def status_bar(current, final):
-    curr = int(current/(final/20))
-    status = '[' + '#'*curr + '-'*(20-curr) + ']'
-    stdout.write("\r" + status + " " + "{:,}".format(current) + " out of " +
-                 "{:,}".format(final) + " lines")
-    stdout.flush()
+def status_bar(final):
+    def current_status(current):
+        curr = int(current/(final/20))
+        status = '[' + '#'*curr + '-'*(20-curr) + ']'
+        stdout.write('\r' + status + " " + "{:,}".format(current) + " out of " +
+                     "{:,}".format(final) + " lines")
+        stdout.flush()
+    return current_status
 
 
 def merge_line(line):
+    flag = False
     if ' ' in line:
         line = line.split()
+        flag = True
 
     if len(line) > 1:
         mid = len(line)//2
-        left = line[:mid]
-        right = line[mid:]
+        left, right = line[:mid], line[mid:]
 
-        merge_line(left)
-        merge_line(right)
+        left, right = merge_line(left), merge_line(right)
 
         i = j = k = 0
 
@@ -42,8 +44,9 @@ def merge_line(line):
             line[k] = right[j]
             j += 1
             k += 1
-
-        line = " ".join(line)
+        
+        if flag:
+            line = " ".join(line)
 
     return line
 
@@ -56,11 +59,9 @@ def merge_file(file):
 
     if len(file) > 1:
         mid = len(file)//2
-        left = file[:mid]
-        right = file[mid:]
-
-        merge_file(left)
-        merge_file(right)
+        left, right = file[:mid], file[mid:]
+        
+        left, right = merge_file(left), merge_file(right)
 
         i = j = k = 0
 
@@ -85,11 +86,15 @@ def merge_file(file):
 
     if flag:
         with open('Merge It.txt', 'w') as f:
+            print('\tСортировка файла...')
+            bar = status_bar(len(file))
             for line in file:
                 f.write(merge_line(line))
                 f.write('\n')
-                status_bar(file.index(line), len(file))
-            status_bar(len(file), len(file))
+                bar(file.index(line))
+            bar(len(file))
+    else:
+        return file
 
 
 def main():

@@ -1,4 +1,4 @@
-import json
+from json import dumps
 
 
 def from_json(text):
@@ -23,7 +23,7 @@ def from_json(text):
             return eval_str(text)
 
 
-def eval_str(string):
+def eval_str(string: str) -> (int, float, str):
     if string.replace('.', '').isdigit():
         sign = ""
     elif string[1:].replace('.', '').isdigit():
@@ -38,7 +38,7 @@ def eval_str(string):
 
     if "." in string:
         string = string.split(".")
-        num += eval_str(string[0]) + eval_str(string[1])/10**len(string[1])
+        num = eval_str(string[0]) + eval_str(string[1])/10**len(string[1])
     else:
         string = [char for char in string]
         count = len(string)
@@ -49,12 +49,10 @@ def eval_str(string):
                     num += numDict[key] * 10**count
                     break
 
-    if sign:
-        return -num
-    return num
+    return -num if sign else num
 
 
-def json_object(string):
+def json_object(string: str) -> (list, dict):
     new_object = {} if string[0] == "{" else []
     string = string[1:-1]
     array = []
@@ -66,8 +64,8 @@ def json_object(string):
             if new == -1:
                 array.append(string[old:])
                 break
-            elif (string[old:new].count('[') == string[old:new].count(']') and
-                  string[old:new].count('{') == string[old:new].count('}')):
+            elif string[old:new].count('[') == string[old:new].count(']') and \
+                 string[old:new].count('{') == string[old:new].count('}'):
                     array.append(string[old:new])
                     break
             else:
@@ -79,19 +77,14 @@ def json_object(string):
     length = len(array)
     i = 0
     while i < length:
-        if type(new_object) == list:
+        if isinstance(new_object, list):
             array[i] = from_json(array[i])
         else:
-            key, obj = array[i].split(': ', 1)
-            key = from_json(key)
-            obj = from_json(obj)
-            new_object[key] = obj
+            key, value =[from_json(x) for x in array[i].split(': ', 1)]
+            new_object.update({key: value})
         i += 1
 
-    if type(new_object) == list:
-        return array
-    else:
-        return new_object
+    return array if isinstance(new_object, list) else new_object
 
 
 def main():
@@ -107,7 +100,7 @@ def main():
         {"model": "Ford Edge", "mpg": 24.1}
       ]
     }
-    test = json.dumps(py_obj)
+    test = dumps(py_obj)
     print(from_json(test))
 
 

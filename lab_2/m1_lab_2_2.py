@@ -48,15 +48,15 @@ def generate_file(name, size_mb, k, l):
                     f.write(" " * tail)
                     f_size += tail
         bar(f_size)
-    print("\n"+"All done!")
+    print("\nAll done!")
 
 
 def status_bar(final):
     def current_status(current):
         curr = int(current/(final/20))
         status = '[' + '#'*curr + '-'*(20-curr) + ']'
-        stdout.write('\r' + status + " " + "{:,}".format(current) + " out of " +
-                     "{:,}".format(final) + " bytes")
+        stdout.write("\r{} {:,} out of {:,} bytes".format(status, current,
+                                                          final))
         stdout.flush()
     return current_status
 

@@ -13,11 +13,9 @@ def flatten_it(array):
 
 
 def output(array):
-    result = []
     try:
-        for elem in flatten_it(eval(array)):
-                result.append(elem)
-        print(result)
+        result = [x for x in flatten_it(eval(array))]
+        print('Flattened array:', result)
     except ValueError:
         print("Ошибка! Бесконечный цикл вложенности.")
 
@@ -29,10 +27,8 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--arr", help="enter array to linearize")
     args = parser.parse_args()
-    if args.arr:
-        output(args.arr)
-    else:
-        output(input("Введите массив:"))
+
+    output(args.arr if args.arr else input("Введите массив: "))
 
 
 if __name__ == "__main__":

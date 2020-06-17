@@ -6,8 +6,8 @@ def status_bar(final):
     def current_status(current):
         curr = int(current/(final/20))
         status = '[' + '#'*curr + '-'*(20-curr) + ']'
-        stdout.write('\r' + status + " " + "{:,}".format(current) + " out of " +
-                     "{:,}".format(final) + " lines")
+        stdout.write("\r{} {:,} out of {:,} lines".format(status, current,
+                                                          final))
         stdout.flush()
     return current_status
 
@@ -20,9 +20,7 @@ def merge_line(line):
 
     if len(line) > 1:
         mid = len(line)//2
-        left, right = line[:mid], line[mid:]
-
-        left, right = merge_line(left), merge_line(right)
+        left, right = merge_line(line[:mid]), merge_line(line[mid:])
 
         i = j = k = 0
 
@@ -59,9 +57,7 @@ def merge_file(file):
 
     if len(file) > 1:
         mid = len(file)//2
-        left, right = file[:mid], file[mid:]
-        
-        left, right = merge_file(left), merge_file(right)
+        left, right = merge_file(file[:mid]), merge_file(file[mid:])
 
         i = j = k = 0
 
@@ -90,9 +86,9 @@ def merge_file(file):
             bar = status_bar(len(file))
             for line in file:
                 f.write(merge_line(line))
-                f.write('\n')
-                bar(file.index(line))
-            bar(len(file))
+                if file.index(line) != len(file)-1:
+                    f.write('\n')
+                bar(file.index(line)+1)
     else:
         return file
 
@@ -101,13 +97,10 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--file", help="enter name of file to sort")
     args = parser.parse_args()
-    if(args.file):
-        with open(args.file, 'r') as f:
-            merge_file(f)
-    else:
-        name = input("Введите имя файла: ")
-        with open(name, 'r') as f:
-            merge_file(f)
+
+    name = args.file if args.file else input("Введите имя файла: ")
+    with open(name, 'r') as f:
+        merge_file(f)
     print("\nTask finished successfully! For results, check 'Merge It.txt'.")
 
 

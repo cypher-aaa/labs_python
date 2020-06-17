@@ -38,14 +38,14 @@ def main():
         except ValueError:
             print("Некорректный ввод.")
     else:
-        print("Введите n (номер числа Леонардо):")
-        while (True):
+        print("Введите n (номер числа Леонардо):", end="")
+        while True:
             try:
                 res = leonardo(float(input()))
                 if res:
                     break
             except ValueError:
-                print("Пожалуйста, введите одно число (n).")
+                print("Пожалуйста, введите одно число (n).", end="")
         print("Ваше число:", res)
 
 
